@@ -11,11 +11,14 @@ $sm = 767px
 // Colors
 $primary ?= #fff
 $secondary ?= #000
-$accent ?= #ff0000
+$accent ?= #fbe9e4
 $grey ?= #939598
 
 // Metrics
 $padding = 3rem
+$paddingSmall = 2rem
+$spaceBetween = ($padding*2)
+$paddingResp = 7vh
 $kinetic = cubic-bezier(0.77, 0, 0.175, 1)
 
 // CSS Reset
@@ -39,22 +42,38 @@ body
 	font-smoothing()
 	font-size 1.5rem
 
+@import 'loader.styl'
+
 p
 	margin-bottom 1em
-	line-height 100%
+	line-height 140%
 
 p:last-child
 	margin-bottom 0
 
 ::selection
-	background $secondary
+	background $accent
+	color alpha($secondary, 0.8)
 	
 ::-moz-selection
-	background $secondary
+	background $accent
+	color alpha($secondary, 0.8)
 
 *
-	hideselect()
+	//hideselect()
 	box-sizing(border-box)
+
+img
+	display block
+	max-width 100%
+
+.lazyimg
+	hideselect()
+	transition(opacity 600ms ease)
+	opacity 0
+
+.lazyimg.lazyloaded, .lazyimg.flickity-lazyloaded, .lazyimg.flickity-bg-lazyloaded
+	opacity 1
 
 a, a:hover, a:visited, a:focus
 	color inherit
@@ -64,101 +83,114 @@ a, a:hover, a:visited, a:focus
 em
 	font-family 'MI'
 
-h5
+h2
+	margin .4em 0
+
+h1, h2, h3, .lead
+	font-size 3.6rem
+
+.lead
+	p
+		line-height 110%
+
+.small
+	p
+		line-height 120%
+
+h4
+	margin-top .5em
+	margin-bottom 1em
+
+h4, h5, .explore, .small, .project-categories
 	font-family 'PN'
+	font-size 1rem
+	letter-spacing .11em
+	text-transform uppercase
 
-#outdated
-	display none
-	text-align center
-	position fixed
+.explore
+	margin-left .3em
+
+.item-description, .project-description, .project-readmore, .readmore
+	font-size 1.3rem
+
+.black
+	color #000 !important
+
+.white
+	color #fff !important
+
+.center
+	text-align center !important
+
+.mt
+	margin-top $padding
+	
+.mb
+	margin-bottom $padding
+
+.my
+	margin-top $padding
+	margin-bottom $padding
+
+.mx
+	margin-left $padding
+	margin-right $padding
+
+hr
 	width 100%
-	height 100%
-	top 0
-	left 0
-	background $primary
-	z-index 900
-	a
-		border-bottom 1px solid
-	.inner
-		padding 8rem 20%
+	height 0
+	border none
+	border-bottom 1px solid alpha($grey, 0.5)
+	margin $spaceBetween 0
 
-.no-js, .no-svg, .no-flexbox
-	#outdated
+.cf
+	clearfix()
+
+.col-1-3
+	col(1/3, cycle:3, gutter:2)
+	+below($md)
+		stack()
+		margin-bottom $padding
+
+.col-1-2
+	col(1/2, cycle:2)
+	+below($md)
+		stack()
+		margin-bottom $padding
+
+.span-1-2
+	span(1/2)
+	+below($md)
+		stack()
+		margin-bottom $padding
+
+.flickity-page-dots
+	width auto
+	align(vertical)
+	bottom initial
+	right $padding
+	left initial
+	.dot
 		display block
+		width .7rem
+		height .7rem
+		margin 1.2rem 0
+		background $primary
+		opacity 1
+	.dot.is-selected
+		background $accent
 
-// @keyframes color {
-//     100%, 0% {
-//         stroke: #40382e
-//     }
-//     40% {
-//         stroke: #0f0f0f
-//     }
-//     66% {
-//         stroke: #40382e
-//     }
-//     80%, 90% {
-//         stroke: #0f0f0f
-//     }
-// }
-
-@keyframes rotate {
-    100% {
-        transform(rotate(360deg))
-    }
-}
-
-@keyframes dash {
-    0% {
-        stroke-dasharray: 1, 200;
-        stroke-dashoffset: 0
-    }
-    30% {
-        stroke-dasharray: 89, 200;
-        stroke-dashoffset: -35px
-    }
-    100% {
-        stroke-dasharray: 89, 200;
-        stroke-dashoffset: -124px
-    }
-}
-
-.loader
-	position fixed
-	width 100%
-	height 100%
-	top 0
-	left 0
-	//background $primary url('../../images/loader.gif') center no-repeat
-	background $primary
-	background-size 15px
-	z-index 10000
-	.spinner
-		width 50px
-		height 50px
-		align()
-		.circular
-			animation rotate 2s linear infinite
-			height 100%
-			transform-origin center center
-			width 100%
-			position absolute
-			top 0
-			bottom 0
-			left 0
-			right 0
-			margin auto
-			.path
-				stroke $secondary
-				stroke-dasharray 1, 200
-				stroke-dashoffset 0
-				animation dash 1.5s ease-in-out infinite, color 6s ease-in-out infinite
+.flickity-prev-next-button, .flickity-prev-next-button:hover
+	background transparent
 
 header
-	position fixed
-	width 200px
-	padding $padding
+	hideselect()
+	width 20rem
+	padding $padding 0 0 ($padding/2)
 	top 0
 	align(horizontal)
+	position fixed
+	z-index 100
 	#site-title
 		svg
 			transition(fill 500ms ease)
@@ -171,6 +203,133 @@ header.grey, body.page header
 	#site-title
 		svg
 			fill $grey
+
+#wrapper
+	span(1)
+
+#container, .contained
+	span(1)
+	width 85%
+	max-width 200rem
+	display table
+	margin auto
+	float none
+
+section
+	span(1)
+	margin-bottom $spaceBetween
+	+below($md)
+		margin-bottom $padding
+
+div.cta-button
+	margin $paddingSmall
+	position absolute
+	bottom 0
+	left 0
+	z-index 10
+
+#featured-projects
+	span(1)
+	.featured-item
+		span(1)
+		position relative
+		background $primary center no-repeat
+		background-size cover
+		height 100vh
+		.cta-button
+			display none
+	div.cta-button
+		margin $padding
+	.clone.cta-button
+		transition(all 500ms ease)
+		a
+			display block
+	.clone.cta-button.hidden
+		transition(opacity 600ms ease)
+		opacity 0
+		overflow hidden
+		a
+			transition(transform 500ms $kinetic)
+			transform(translateY(100%) translateZ(0))
+
+#intro
+	span(1)
+	flexbox()
+	justify-content center
+	align-items center
+	+below($md)
+		display block
+	.recent-project
+		hideselect()
+		span(1/2)
+		position relative
+		+below($md)
+			stack()
+			margin-bottom $padding
+		img
+			position relative
+			z-index 0
+			width 100%
+	.intro-text
+		span(1/2)
+		padding $paddingResp
+		+below($md)
+			stack()
+			padding 0
+
+#projects
+	span(1)
+	margin-bottom 0
+	.project-item
+		margin-bottom $spaceBetween
+		.item-description
+			width 90%
+
+#page-content
+	span(1)
+	margin-top 15rem
+	#project-infos
+		span(6/14, offset: 4/14)
+		margin-bottom 2.5em
+		.project-categories
+			padding 1.5em 0
+			span:not(:last-child)::after
+				content ' / '
+		.project-description
+			padding-top 1.5em
+		.project-categories ~ .project-description
+			padding-top 0
+		.project-description.readmore
+			position relative
+			padding-bottom 0
+		.project-description.readmore::after
+			content '\2014Read More'
+			transition opacity 200ms ease, visibility 200ms ease
+			cursor pointer
+			font-family 'MI'
+			position absolute
+			width 100%
+			bottom -2em
+			left 0
+		.project-description.readmore.clicked::after
+			opacity 0
+			visibility hidden
+		.project-readmore
+			display none
+	.slider-section
+		.gallery-cell
+			width 100%
+
+footer
+	span(1)
+	background $accent
+	padding $paddingResp 0
+	.col-1-3
+		+above($xl)
+			col(1/3, cycle:3, gutter:13)
+	.col-1-2
+		+above($xl)
+			col(1/2, cycle:2, gutter:13)
 
 .svg
 	.logo.fallback

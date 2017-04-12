@@ -1,3 +1,29 @@
+</div>
+
+<footer>
+	<div class="contained">
+		<div class="cf">
+			<h2><?= $site->footertitle()->html() ?></h2>
+		</div>
+		<div class="cf">
+			<div class="col-1-3">
+				<?= $site->footertext1()->kt() ?>
+			</div>
+			<div class="col-1-3">
+				<?= $site->footertext2()->kt() ?>
+			</div>
+			<div class="col-1-3">
+				<div class="col-1-2">
+					<?= $site->footeraddress()->kt() ?>
+				</div>
+				<div class="col-1-2">
+					<?= $site->footercontact()->kt() ?>
+				</div>
+			</div>
+		</div>
+	</div>
+</footer>
+
 <?php if(!$site->googleanalytics()->empty()): ?>
   <!-- Google Analytics-->
   <script>

@@ -4,13 +4,32 @@ title: Site
 fields:
   generalSettings:
     label: Site Settings
-    type: headline
+    type: tabs
   title:
     label: Title
     type:  text
+    width: 1/2
+  projectpage:
+    label: Main project page
+    type: select
+    width: 1/2
+    options: query
+    required: true
+    query:
+      fetch: pages
+      template: projects
   description:
     label: Description
     type:  textarea
+    width: 1/2
+  seo:
+    label: Special SEO Description
+    type: textarea
+    width: 1/2
+    help: Will be displayed on search engines only (optional)
+  tagline:
+    label: Tagline
+    type: textarea
   keywords:
     label: Keywords
     type:  tags
@@ -29,3 +48,21 @@ fields:
     type: image
     help: 1200x630px minimum
     width: 1/2
+  footerSettings:
+    label: Footer Settings
+    type: tabs
+  footertitle:
+    label: Footer Title
+    type: text
+  footertext1:
+    label: Text 1
+    type: textarea
+  footertext2:
+    label: Text 2
+    type: textarea
+  footeraddress:
+    label: Address
+    type: textarea
+  footercontact:
+    label: Contact
+    type: textarea
