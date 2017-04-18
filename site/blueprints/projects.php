@@ -44,6 +44,25 @@ fields:
         options:
           black: Black
           white: White
+  highlightSettings:
+    label: Highlighted Project
+    type: tabs
+  highlightedProjects:
+    label: Highlighted Projects
+    type: structure
+    style: table
+    fields:
+      hp:
+        label: Project
+        type: quickselect
+        options: visibleChildren
+        required: true
+        width: 1/2
+      hpposition:
+        label: Position
+        type: number
+        min: 1
+        width: 1/2
   recentSettings:
     label: Recent Project
     type: tabs

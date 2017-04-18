@@ -88,7 +88,9 @@ fields:
             width: 1/2
       videosection:
         label: Video
-        style: table
+        entry: >
+          <p>Video ID : {{videourl}}</p>
+          <p>Video File : {{videofile}}</p>
         fields:
           videourl:
             label: Video ID

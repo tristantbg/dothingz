@@ -40,6 +40,7 @@ of the system, please check out http://getkirby.com/docs/advanced/options
 c::set('home',''.site()->projectpage());
 c::set('debug', true);
 c::set('oembed.lazyvideo', true);
+c::set('kirbytext.image.figure',false);
 //Typo
 c::set('typography', true);
 c::set('typography.ordinal.suffix', false);

@@ -11,7 +11,8 @@ $sm = 767px
 // Colors
 $primary ?= #fff
 $secondary ?= #000
-$accent ?= #fbe9e4
+//$accent ?= #fbe9e4
+$accent ?= #fdf5f3
 $grey ?= #939598
 
 // Metrics
@@ -24,10 +25,6 @@ $kinetic = cubic-bezier(0.77, 0, 0.175, 1)
 // CSS Reset
 global-reset()
 
-webfont('PN', 'MarkSimonsonProximaNovaRegular', true, 'normal')
-webfont('M', 'MillerDisplay', true, 'normal')
-webfont('MI', 'MillerDisplayItalic', true, 'normal')
-
 body,html
 	width 100%
 	-webkit-text-size-adjust 100%
@@ -37,10 +34,10 @@ html
 	font-size 62.5%
 
 body
-	font-family 'M', Helvetica Neue, Arial, sans-serif
+	font-family 'ChronicleDisplay-Light', Helvetica Neue, Arial, sans-serif
 	text-rendering optimizeLegibility
 	font-smoothing()
-	font-size 1.5rem
+	font-size 1.4rem
 
 @import 'loader.styl'
 
@@ -67,12 +64,12 @@ img
 	display block
 	max-width 100%
 
-.lazyimg
+.lazyimg, .plyr
 	hideselect()
 	transition(opacity 600ms ease)
 	opacity 0
 
-.lazyimg.lazyloaded, .lazyimg.flickity-lazyloaded, .lazyimg.flickity-bg-lazyloaded
+.lazyimg.lazyloaded, .lazyimg.flickity-lazyloaded, .lazyimg.flickity-bg-lazyloaded, .plyr.plyr--ready
 	opacity 1
 
 a, a:hover, a:visited, a:focus
@@ -80,18 +77,19 @@ a, a:hover, a:visited, a:focus
 	text-decoration none
 	cursor pointer
 
-em
-	font-family 'MI'
+em, .readmore
+	font-family 'ChronicleDisplay-LightItalic'
 
 h2
 	margin .4em 0
 
-h1, h2, h3, .lead
-	font-size 3.6rem
+h1, h2, h3
+	font-size 3.8rem
 
 .lead
+	font-size 6rem
 	p
-		line-height 110%
+		line-height 100%
 
 .small
 	p
@@ -102,13 +100,21 @@ h4
 	margin-bottom 1em
 
 h4, h5, .explore, .small, .project-categories
-	font-family 'PN'
+	font-family 'GothamBook'
 	font-size 1rem
-	letter-spacing .11em
+	letter-spacing .05em
 	text-transform uppercase
+	line-height 130%
+
 
 .explore
 	margin-left .3em
+
+.readmore
+	cursor pointer
+
+.readmore::after
+	content '\2014Read More'
 
 .item-description, .project-description, .project-readmore, .readmore
 	font-size 1.3rem
@@ -146,6 +152,10 @@ hr
 .cf
 	clearfix()
 
+.project-categories
+	span:not(:last-child)::after
+		content ' / '
+
 .col-1-3
 	col(1/3, cycle:3, gutter:2)
 	+below($md)
@@ -153,7 +163,7 @@ hr
 		margin-bottom $padding
 
 .col-1-2
-	col(1/2, cycle:2)
+	col(1/2, cycle:2, gutter:2)
 	+below($md)
 		stack()
 		margin-bottom $padding
@@ -183,9 +193,18 @@ hr
 .flickity-prev-next-button, .flickity-prev-next-button:hover
 	background transparent
 
+.flickity-prev-next-button.previous
+	left $padding
+
+.flickity-prev-next-button.next
+	right $padding
+
+.flickity-prev-next-button .arrow
+	fill $primary
+
 header
 	hideselect()
-	width 20rem
+	width 25rem
 	padding $padding 0 0 ($padding/2)
 	top 0
 	align(horizontal)
@@ -222,7 +241,8 @@ section
 		margin-bottom $padding
 
 div.cta-button
-	margin $paddingSmall
+	margin $paddingSmall 0
+	width 100%
 	position absolute
 	bottom 0
 	left 0
@@ -235,11 +255,9 @@ div.cta-button
 		position relative
 		background $primary center no-repeat
 		background-size cover
-		height 100vh
+		height 95vh
 		.cta-button
 			display none
-	div.cta-button
-		margin $padding
 	.clone.cta-button
 		transition(all 500ms ease)
 		a
@@ -254,9 +272,9 @@ div.cta-button
 
 #intro
 	span(1)
-	flexbox()
-	justify-content center
-	align-items center
+	// flexbox()
+	// justify-content center
+	// align-items center
 	+below($md)
 		display block
 	.recent-project
@@ -271,7 +289,8 @@ div.cta-button
 			z-index 0
 			width 100%
 	.intro-text
-		span(1/2)
+		//span(1/2)
+		span(1)
 		padding $paddingResp
 		+below($md)
 			stack()
@@ -279,11 +298,49 @@ div.cta-button
 
 #projects
 	span(1)
-	margin-bottom 0
+	margin-bottom $spaceBetween
+	hideselect()
+	.gutter-sizer
+		width 2%
+	.grid-sizer
+		width 49%
 	.project-item
-		margin-bottom $spaceBetween
+		width 49%
+		position relative
+		cursor pointer
+		img
+			transition(opacity 200ms ease)
+			opacity 1
+		a
+			display block
 		.item-description
-			width 90%
+			padding 2em 0
+		.overlay
+			transition(opacity 200ms ease)
+			opacity 0
+			background $primary
+			position absolute
+			top 0
+			left 0
+			height 100%
+			width 100%
+			text-align center
+			.inner
+				align(vertical)
+				position relative
+				width 50%
+				margin-left auto
+				margin-right auto
+	.project-item:hover
+		img
+			opacity 0
+		.overlay
+			opacity 1
+	.project-item.highlight
+		height 25vw
+		.overlay
+			background $accent
+			opacity 1
 
 #page-content
 	span(1)
@@ -293,8 +350,6 @@ div.cta-button
 		margin-bottom 2.5em
 		.project-categories
 			padding 1.5em 0
-			span:not(:last-child)::after
-				content ' / '
 		.project-description
 			padding-top 1.5em
 		.project-categories ~ .project-description
@@ -303,10 +358,8 @@ div.cta-button
 			position relative
 			padding-bottom 0
 		.project-description.readmore::after
-			content '\2014Read More'
 			transition opacity 200ms ease, visibility 200ms ease
 			cursor pointer
-			font-family 'MI'
 			position absolute
 			width 100%
 			bottom -2em
@@ -321,16 +374,28 @@ div.cta-button
 			width 100%
 
 footer
+	transition(all .7s $kinetic)
 	span(1)
 	background $accent
 	padding $paddingResp 0
+	top 100%
+	left 0
 	.col-1-3
 		+above($xl)
 			col(1/3, cycle:3, gutter:13)
 	.col-1-2
 		+above($xl)
 			col(1/2, cycle:2, gutter:13)
+	#socials
+		margin-top 2em
+		img
+			display inline-block
+			margin-right 10px
 
 .svg
 	.logo.fallback
 		display none
+
+.no-svg, .no-csstransforms
+	#outdated
+		display block

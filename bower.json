@@ -5,6 +5,7 @@
   "dependencies": {
     "jquery": "~2.1.1",
     "history.js": "latest",
-    "normalize-css": "latest"
+    "normalize-css": "latest",
+    "protonet/jquery.inview": "jquery.inview#^1.1.2"
   }
 }

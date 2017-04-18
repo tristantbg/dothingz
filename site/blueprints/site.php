@@ -66,3 +66,9 @@ fields:
   footercontact:
     label: Contact
     type: textarea
+  insta:
+    label: Instagram
+    type: url
+  linkedin:
+    label: Linkedin
+    type: url

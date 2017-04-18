@@ -1,6 +1,6 @@
 <section id="intro">
 
-	<?php if($projectsPage->recenttoggle()->bool()): ?>
+	<?php if(false)://if($projectsPage->recenttoggle()->bool()): ?>
 		<?php
 		$recentProject = $pages->find($projectsPage.'/'.$projectsPage->recentproject());
 
@@ -28,11 +28,12 @@
 	<div class="intro-text center">
 		
 		<div class="lead">
-			<?= $site->description()->kt() ?>
-		</div>
-		<div class="small my">
 			<?= $site->tagline()->kt() ?>
 		</div>
+		<div class="small my">
+			<?= $site->description()->kt() ?>
+		</div>
+		<div class="readmore" event-target="footer"></div>
 
 	</div>
 	

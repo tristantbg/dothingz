@@ -10,7 +10,8 @@
 
 		<div class="featured-item lazyimg" data-flickity-bg-lazyload="<?= resizeOnDemand($image->toFile(), 3000) ?>">
 			<div class="cta-button">
-				<a class="<?= $p->fpcolor() ?>" href="<?= $project->url() ?>" data-title="<?= $project->title()->html() ?>" data-target="page">
+				<div class="contained">
+					<a class="<?= $p->fpcolor() ?>" href="<?= $project->url() ?>" data-title="<?= $project->title()->html() ?>" data-target="page">
 					<?php
 					if ($p->fptext()->isNotEmpty()) {
 						echo "<h3>".$p->fptext()->html()."</h3>";
@@ -19,7 +20,9 @@
 					}
 					?>
 					<span class="explore"><?= c::get('vars.explore') ?></span>
-				</a>
+					</a>
+				</div>
+				
 			</div>
 		</div>
 
@@ -27,8 +30,6 @@
 
 <?php endforeach ?>
 
-<div class="clone cta-button">
-	
-</div>
+<div class="clone cta-button"></div>
 	
 </section>

@@ -1,0 +1,64 @@
+// ==========================================================================
+// Plyr variables
+// https://github.com/selz/plyr
+// https://robots.thoughtbot.com/sass-default
+// ==========================================================================
+// Settings
+$plyr-border-box = true
+$plyr-touch-action = true
+$plyr-sr-only-important = true
+// Colors
+$plyr-color-main = rgb(238, 230, 219)
+// Font sizes
+$plyr-font-family = Avenir, "Avenir Next", "Helvetica Neue", "Segoe UI", Helvetica, Arial, sans-serif
+$plyr-font-size-small = 12px
+$plyr-font-size-base = 14px
+// Captions
+$plyr-captions-bg = alpha(black, 0.3)
+$plyr-captions-color = white
+$plyr-font-size-captions-base = $plyr-font-size-base
+$plyr-font-size-captions-medium = ceil($plyr-font-size-base * 1.5)
+$plyr-font-size-captions-large = $plyr-font-size-base * 2
+// Controls
+$plyr-control-icon-size = 10px
+$plyr-control-spacing = 10px
+$plyr-control-padding = $plyr-control-spacing * 0.7
+$plyr-video-controls-bg = black
+$plyr-video-control-color = rgb(238, 230, 219)
+$plyr-video-control-color-hover = rgb(238, 230, 219)
+$plyr-video-control-bg-hover = transparent
+$plyr-audio-controls-bg = rgb(238, 230, 219)
+$plyr-audio-controls-border = 1px solid #dbe3e8
+$plyr-audio-control-color = #565d64
+$plyr-audio-control-color-hover = rgb(238, 230, 219)
+$plyr-audio-control-bg-hover = transparent
+// Tooltips
+$plyr-tooltip-bg = transparent
+$plyr-tooltip-color = white
+$plyr-tooltip-padding = $plyr-control-spacing / 2
+$plyr-tooltip-arrow-size = 4px
+$plyr-tooltip-radius = 3px
+// Progress
+$plyr-progress-loading-size = 10px
+$plyr-progress-loading-bg = alpha(black, 0.85)
+$plyr-video-progress-bg = alpha(rgb(238, 230, 219), 0.75)
+$plyr-video-progress-buffered-bg = $plyr-video-progress-bg
+$plyr-audio-progress-bg = alpha(black, 0.33)
+$plyr-audio-progress-buffered-bg = $plyr-audio-progress-bg
+// Range sliders
+$plyr-range-track-height = 6px
+$plyr-range-thumb-height = floor($plyr-range-track-height * 2)
+$plyr-range-thumb-width = floor($plyr-range-track-height * 2)
+$plyr-range-thumb-bg = white
+$plyr-range-thumb-border = 2px solid transparent
+$plyr-range-thumb-shadow = 0 1px 1px alpha($plyr-video-controls-bg, 0.85), 0 0 0 1px alpha(black, 0.85)
+$plyr-range-thumb-active-border-color = white
+$plyr-range-thumb-active-bg = $plyr-video-control-bg-hover
+$plyr-range-thumb-active-scale = 1.25
+$plyr-video-range-track-bg = $plyr-video-progress-buffered-bg
+$plyr-audio-range-track-bg = $plyr-audio-progress-buffered-bg
+$plyr-range-selected-bg = $plyr-color-main
+// Breakpoints
+$plyr-bp-screen-sm = 480px
+$plyr-bp-screen-md = 768px
+$plyr-bp-screen-lg = 1024px

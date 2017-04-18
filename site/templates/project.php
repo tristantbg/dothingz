@@ -19,7 +19,7 @@
 
 		<?php if($page->readmore()->isNotEmpty()): ?>
 
-			<div class="project-description readmore">
+			<div class="project-description readmore" event-target="readmore">
 				<?= $page->text()->kt() ?>
 				<div class="project-readmore">
 					<?= $page->readmore()->kt() ?>
@@ -60,11 +60,7 @@
 
 	</div>
 
-	<hr>
-
 </div>
-
-<?php snippet('projectsgrid') ?>
 
 </div>
 
