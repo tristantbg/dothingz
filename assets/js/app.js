@@ -21,6 +21,7 @@
                      content = State.data;
                      $body.addClass('loading');
                      if (content.type == 'page') {
+                        $body.addClass('page');
                          app.loadContent(State.url, $container, '#page-content');
                      } else {
                          app.loadContent(State.url, $container, '#page-content');
@@ -47,6 +48,10 @@
                          el.find('.project-readmore').slideDown(500);
                      }, 400);
                  });
+                 $body.on('click', '[event-target="category"]', function(event) {
+                     event.preventDefault();
+                     $('#category-menu').toggleClass('open');
+                 });
                  $body.on('click', '[event-target="footer"]', function(event) {
                      event.preventDefault();
                      footer = true;
@@ -68,16 +73,20 @@
                          app.plyr(true);
                          app.loadProjects();
                          app.loadSlider();
-                         $(".loader").fadeOut(500, function() {
+                         $(".loader").fadeOut(200, function() {
                              $body.addClass('loaded');
                          });
                      }, 1500);
                  });
                  $(window).scroll(function(event) {
-                     if ($(window).scrollTop() > height - headerHeight) {
-                         $header.addClass('grey');
+                     var scrollTop = $(window).scrollTop();
+                     if (scrollTop > height / 5) {
+                         $('#featured-projects').addClass('no-invite');
+                     }
+                     if (scrollTop > height * 0.7 - headerHeight) {
+                         $header.addClass('reduced');
                      } else {
-                         $header.removeClass('grey');
+                         $header.removeClass('reduced');
                      }
                      if (footer) {
                          $("footer").css('transform', 'none');
@@ -154,17 +163,27 @@
              });
          },
          loadSlider: function() {
-             mainSlider = $('#featured-projects').flickity({
+             mainSlider = $('#featured-projects.case-study').flickity({
                  cellSelector: '.featured-item',
                  imagesLoaded: false,
                  bgLazyLoad: 2,
-                 //autoPlay: 500,
-                 //setGallerySize: false,
                  accessibility: false,
                  wrapAround: true,
                  prevNextButtons: false,
                  pageDots: true,
                  draggable: true
+             });
+             $('#featured-projects.animated').flickity({
+                 cellSelector: '.featured-item',
+                 imagesLoaded: false,
+                 bgLazyLoad: 2,
+                 autoPlay: 500,
+                 pauseAutoPlayOnHover: false,
+                 accessibility: false,
+                 wrapAround: true,
+                 prevNextButtons: false,
+                 pageDots: false,
+                 draggable: false
              });
              $('.slider-section').flickity({
                  cellSelector: '.gallery-cell',
@@ -235,19 +254,18 @@
              setTimeout(function() {
                  $(window).scrollTop(0);
                  $(target).load(url + ' ' + container, function(response) {
+                     app.plyr(true);
+                     app.loadSlider();
                      if (content.type == 'page') {
                          setTimeout(function() {
+                              app.loadProjects();
                              $body.addClass('page loaded').removeClass('home loading');
-                             app.plyr(true);
-                             app.loadSlider();
-                         }, 100);
+                         }, 200);
                      } else {
                          setTimeout(function() {
+                              app.loadProjects();
                              $body.addClass('home loaded').removeClass('page loading');
-                             app.plyr(true);
-                             app.loadProjects();
-                             app.loadSlider();
-                         }, 100);
+                         }, 200);
                      }
                  });
              }, 300);

@@ -13,7 +13,7 @@ $primary ?= #fff
 $secondary ?= #000
 //$accent ?= #fbe9e4
 $accent ?= #fdf5f3
-$grey ?= #939598
+$grey ?= #d1d2d3
 
 // Metrics
 $padding = 3rem
@@ -21,6 +21,8 @@ $paddingSmall = 2rem
 $spaceBetween = ($padding*2)
 $paddingResp = 7vh
 $kinetic = cubic-bezier(0.77, 0, 0.175, 1)
+$cubic = cubic-bezier(0.4, 0.01, 0.165, 0.99)
+$shadow = drop-shadow(0 0 4px rgba(0,0,0,0.2))
 
 // CSS Reset
 global-reset()
@@ -28,7 +30,7 @@ global-reset()
 body,html
 	width 100%
 	-webkit-text-size-adjust 100%
-	background $primary
+	background $accent
 
 html
 	font-size 62.5%
@@ -89,9 +91,13 @@ h2
 
 h1, h2, h3
 	font-size 3.8rem
+	+below($md)
+		font-size 3rem
 
 .lead
 	font-size 6rem
+	+below($md)
+		font-size 3rem
 	p
 		line-height 100%
 
@@ -103,12 +109,14 @@ h4
 	margin-top .5em
 	margin-bottom 1em
 
-h4, h5, .explore, .small, .project-categories
+h4, h5, .explore, .small, .project-categories, #featured-projects::after
 	font-family 'GothamBook'
 	font-size 1rem
 	letter-spacing .05em
 	text-transform uppercase
 	line-height 130%
+	-webkit-font-smoothing auto
+	-moz-osx-font-smoothing initial
 
 
 .explore
@@ -211,24 +219,136 @@ header
 	width 25rem
 	padding $padding 0 0 ($padding/2)
 	top 0
-	align(horizontal)
 	position fixed
 	z-index 100
+	+below($md)
+		width 20rem
 	#site-title
 		svg
-			transition(fill 500ms ease)
 			width 100%
 			fill $primary
 		.secondary
 			display none
+		.small
+			display none
+			#logo_s_every
+				overflow hidden
+				transition(width 300ms $kinetic)
+				width 0
+
+body.home header:not(.reduced)
+	align(horizontal)
+	position fixed
+	vendor(filter,$shadow)
+
+body.page header:not(.reduced)
+	vendor(filter, none)
+
+body.home header.reduced
+	animation(godown 200ms $kinetic forwards)
+
+body.page header, header.reduced
+	width 100%
+	background $primary
+	padding ($padding/2) 10%
+	height ($padding*2)
+	+below($md)
+		padding ($padding/2) 5%
+	#site-title
+		height 100%
+		svg, div
+			fill $grey
+			width auto
+			height 100%
+			display block
+			float left
+		.full
+			display none
+		.small
+			height 100%
+			display block
+
+body.page header:hover, header.reduced:hover
+	//background $grey
+	#site-title
+		.small
+			// svg
+			// 	fill $primary
+			#logo_s_every
+				width 13.7rem
 
 header.grey, body.page header
 	#site-title
 		svg
 			fill $grey
+#category-menu
+	position absolute
+	top ($padding + 0.5)
+	right 10%
+	z-index 300
+	vendor(filter,$shadow)
+	.burger-container
+		cursor pointer
+		z-index 300
+		position: absolute
+		top 0
+		right 0
+		height: 40px
+		width: 40px
+		cursor: pointer
+		transform(rotate(0deg))
+		transition: all 0.3s $cubic
+		user-select: none
+		-webkit-tap-highlight-color: transparent
+		#burger
+			width: 40px
+			height: 13px
+			position: relative
+			display: block
+			margin: -4px auto 0
+			top: 50%
+			.bar
+				width: 100%
+				height: 4px
+				display: block
+				position: relative
+				background: $primary
+				transition: all 0.3s $cubic
+				transition-delay: 0s
+			.topBar
+				transform(translateY(0px) rotate(0deg))
+			.btmBar
+				transform(translateY(5px) rotate(0deg))
+	ul.menu
+		transition: all 0.3s $cubic
+		opacity 0
+		visibility hidden
+		position: relative
+		display: block
+		padding: 22px 60px 0
+		list-style: none
+		color $primary
+		li.menu-item
+			margin-bottom .5em
+#category-menu.open
+	height: 100%
+	.burger-container
+		transform(rotate(90deg))
+		#burger
+			.bar
+				transition: all 0.4s $cubic
+				transition-delay: 0.2s
+			.topBar
+				transform(translateY(3px) rotate(45deg))
+			.btmBar
+				transform(translateY(0px) rotate(-45deg))
+	ul.menu
+		opacity 1
+		visibility visible
 
 #wrapper, #container
 	span(1)
+	background $primary
 
 #container
 	transition(opacity 300ms ease)
@@ -254,7 +374,7 @@ div.cta-button
 		position relative
 		background $primary center no-repeat
 		background-size cover
-		height 95vh
+		height 90vh
 		.cta-button
 			display none
 	.clone.cta-button
@@ -268,6 +388,29 @@ div.cta-button
 		a
 			transition(transform 500ms $kinetic)
 			transform(translateY(100%) translateZ(0))
+
+#featured-projects::after
+	transition(opacity 600ms ease)
+	content 'Scroll to discover'
+	display block
+	width 100%
+	text-align center
+	padding-top 4vh
+
+#featured-projects.no-invite::after
+	opacity 0
+
+#featured-projects.animated
+	.flickity-slider
+		transform(none !important)
+	.featured-item
+		transition(none)
+		left 0 !important
+		opacity 0
+		z-index -1
+	.featured-item.is-selected
+		opacity 1
+		z-index 0
 
 #intro
 	// flexbox()
@@ -289,7 +432,7 @@ div.cta-button
 	.intro-text
 		//span(1/2)
 		span(1)
-		padding $paddingResp
+		padding $paddingResp 0
 		+below($md)
 			stack()
 			padding 0
@@ -299,12 +442,18 @@ div.cta-button
 	hideselect()
 	.gutter-sizer
 		width 2%
+		+below($md)
+			width 5%
 	.grid-sizer
 		width 48%
+		+below($md)
+			width 100%
 	.project-item
 		width 48%
 		position relative
 		cursor pointer
+		+below($md)
+			width 100%
 		img
 			transition(opacity 200ms ease)
 		a
@@ -327,6 +476,8 @@ div.cta-button
 				width 50%
 				margin-left auto
 				margin-right auto
+				+below($md)
+					width 90%
 	.project-item:hover
 		img
 			opacity 0
@@ -334,6 +485,8 @@ div.cta-button
 			opacity 1
 	.project-item.highlight
 		height 22.1vw
+		+below($md)
+			height 40rem
 		.overlay
 			background $accent
 			opacity 1
@@ -344,6 +497,8 @@ div.cta-button
 	#project-infos
 		span(6/14, offset: 4/14)
 		margin-bottom 2.5em
+		+below($md)
+			stack()
 		.project-categories
 			padding 1.5em 0
 		.project-description
@@ -379,6 +534,8 @@ footer
 	padding $paddingResp 0
 	top 100%
 	left 0
+	+below($md)
+		height 'calc(100vh - %s)' % ($padding*2)
 	.col-1-3
 		+above($xl)
 			col(1/3, cycle:3, gutter:13)
@@ -392,9 +549,14 @@ footer
 			margin-right 10px
 
 .contained
-	width 80%
+	max-width 80%
 	margin-right auto
 	margin-left auto
+	+below($md)
+		max-width 95%
+
+.contained.narrow
+	max-width 90rem
 
 body.loading
 	cursor wait

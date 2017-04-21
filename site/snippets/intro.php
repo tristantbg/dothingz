@@ -1,4 +1,4 @@
-<section id="intro" class="contained">
+<section id="intro" class="contained narrow">
 
 	<?php if(false)://if($projectsPage->recenttoggle()->bool()): ?>
 		<?php

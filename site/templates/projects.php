@@ -4,7 +4,9 @@
 
 <div id="page-content" class="home">
 	
-	<?php snippet('featured') ?>
+	<?php snippet('categorymenu') ?>
+	
+	<?php snippet('animatedslider') ?>
 	
 	<?php snippet('intro') ?>
 

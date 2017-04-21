@@ -1,4 +1,4 @@
-<section id="featured-projects">
+<section id="featured-projects" class="case-study">
 
 <?php foreach ($page->featuredProjects()->toStructure() as $key => $p): ?>
 

@@ -4,13 +4,13 @@
 
 <div id="page-content" class="project-page">
 
-<section class="contained lead">
+<section class="contained lead center">
 	<?php echo $page->text()->kirbytext() ?>
+	<a href="<?= $site->url() ?>" data-target="index"><h5>Go back to projects</h5></a>
 </section>
 
 </div>
 
 </div>
-
 
 <?php snippet('footer') ?>

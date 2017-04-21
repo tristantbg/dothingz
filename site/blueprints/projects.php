@@ -13,37 +13,11 @@ fields:
     label: Title
     type:  text
   featuredSettings:
-    label: Featured Projects
+    label: Featured Images
     type: tabs
-  featuredProjects:
-    label: Featured Projects
-    type: structure
-    style: table
-    fields:
-      fp:
-        label: Project
-        type: quickselect
-        options: visibleChildren
-        required: true
-        width: 1/2
-      fpimage:
-        label: Custom Image
-        type: image
-        help: Optional
-        width: 1/2
-      fptext:
-        label: Custom Text
-        type: text
-        help: Optional
-        width: 1/2
-      fpcolor:
-        label: Text color
-        type: radio
-        columns: 1
-        width: 1/2
-        options:
-          black: Black
-          white: White
+  featuredImages:
+    label: Featured Images
+    type: gallery
   highlightSettings:
     label: Highlighted Project
     type: tabs
