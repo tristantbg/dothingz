@@ -3,6 +3,8 @@
 <div id="container">
 
 <div id="page-content" class="project-page">
+
+<div class="contained">
 	
 	<div id="project-infos" class="cf center">
 		<h1><?= $page->title()->html() ?></h1>
@@ -36,13 +38,15 @@
 	</div>
 
 	<div id="project-content" class="cf">
+
+		<?php $sliderStart = false ?>
 		
 		<?php foreach($page->builder()->toStructure() as $section): ?>
 
 			<?php if($section->_fieldset() == 'slidersection' && !$sliderStart): ?>
 				<section class="slider-section">
 				<?php $sliderStart = true ?>
-			<?php elseif($section->_fieldset() != 'slidersection'): ?>
+			<?php elseif($sliderStart && $section->_fieldset() != 'slidersection'): ?>
 				</section>
 				<?php $sliderStart = false ?>
 			<?php endif ?>
@@ -59,6 +63,8 @@
 		<?php endforeach ?>
 
 	</div>
+
+</div>
 
 </div>
 

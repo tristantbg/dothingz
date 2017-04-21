@@ -2,7 +2,7 @@ module.exports = function(grunt) {
     grunt.initConfig({
         concat: {
             plugins: {
-                src: ['site/plugins/oembed/assets/js/oembed.js', 'node_modules/flickity/dist/flickity.pkgd.min.js', 'node_modules/flickity-bg-lazyload/bg-lazyload.js','node_modules/lazysizes/lazysizes.min.js', 'node_modules/lazysizes/plugins/optimumx/ls.optimumx.min.js', 'node_modules/lazysizes/plugins/unveilhooks/ls.unveilhooks.js', 'node_modules/packery/dist/packery.pkgd.min.js', 'node_modules/plyr/dist/plyr.js', 'lib/history.js/scripts/bundled/html4+html5/jquery.history.js', 'lib/protonet/jquery.inview/jquery.inview.min.js'],
+                src: ['site/plugins/oembed/assets/js/oembed.js', 'node_modules/flickity/dist/flickity.pkgd.min.js', 'node_modules/flickity-bg-lazyload/bg-lazyload.js','node_modules/lazysizes/lazysizes.min.js', 'node_modules/lazysizes/plugins/optimumx/ls.optimumx.min.js', 'node_modules/lazysizes/plugins/unveilhooks/ls.unveilhooks.js', 'node_modules/packery/dist/packery.pkgd.min.js', 'node_modules/plyr/dist/plyr.js', 'lib/history.js/scripts/bundled/html4+html5/jquery.history.js'],
                 dest: 'assets/js/plugins.concat.js'
             },
             js: {

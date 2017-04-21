@@ -1,10 +1,11 @@
  /* globals $:false */
  var width = $(window).width(),
      height = $(window).height(),
+     content,
      mainSlider,
      footer = false,
      isMobile = false,
-     $root = '/';
+     $root = '/dothings';
  $(function() {
      var app = {
          init: function() {
@@ -12,14 +13,29 @@
              $(document).ready(function($) {
                  $body = $('body');
                  $header = $('header');
+                 $container = $('#container');
                  app.sizeSet();
                  History.Adapter.bind(window, 'statechange', function() {
                      var State = History.getState();
                      console.log(State);
-                     var content = State.data;
-                     if (content.type == 'project') {
-                         $body.addClass('project loading');
-                         app.loadContent(State.url + '/ajax', slidecontainer);
+                     content = State.data;
+                     $body.addClass('loading');
+                     if (content.type == 'page') {
+                         app.loadContent(State.url, $container, '#page-content');
+                     } else {
+                         app.loadContent(State.url, $container, '#page-content');
+                     }
+                 });
+                 $body.on('click', '[data-target]', function(event) {
+                     event.preventDefault();
+                     var $el = $(this);
+                     var target = $el.data('target');
+                     if (target == 'page') {
+                         History.pushState({
+                             type: 'page'
+                         }, $el.data('title') + " | " + $sitetitle, $el.attr('href'));
+                     } else {
+                         app.goIndex();
                      }
                  });
                  $body.on('click', '[event-target="readmore"]', function(event) {
@@ -35,8 +51,8 @@
                      event.preventDefault();
                      footer = true;
                      $("footer").css({
-                       position: 'fixed',
-                       transform: 'translateY(-100%) translateZ(0)'
+                         position: 'fixed',
+                         transform: 'translateY(-100%) translateZ(0)'
                      });
                  });
                  $(document).keyup(function(e) {
@@ -48,14 +64,14 @@
                      if (e.keyCode === 39 && $slider) app.goNext($slider);
                  });
                  $(window).load(function() {
-                     app.loadSlider();
-                     app.loadProjects();
-                     
-                     $(".spinner").fadeOut('300', function() {
-                         $(".loader").fadeOut(500);
-                         $body.addClass('loaded');
+                     setTimeout(function() {
                          app.plyr(true);
-                     });
+                         app.loadProjects();
+                         app.loadSlider();
+                         $(".loader").fadeOut(500, function() {
+                             $body.addClass('loaded');
+                         });
+                     }, 1500);
                  });
                  $(window).scroll(function(event) {
                      if ($(window).scrollTop() > height - headerHeight) {
@@ -64,9 +80,11 @@
                          $header.removeClass('grey');
                      }
                      if (footer) {
-                     $("footer").css('transform', 'none');
-                     setTimeout(function(){$("footer").attr('style', '');},700);
-                     footer = false;
+                         $("footer").css('transform', 'none');
+                         setTimeout(function() {
+                             $("footer").attr('style', '');
+                         }, 700);
+                         footer = false;
                      }
                  });
                  window.onpageshow = function(event) {
@@ -93,34 +111,33 @@
                  loop: loop,
                  iconUrl: "/dothings/assets/images/plyr.svg"
              });
-             // if (players && players.length > 0) {
-             //     $(players).each(function(index, el) {
-             //         var $el = $(el);
-             //         el.on('ready', function() {
-             //             el.play();
-             //             el.pause();
-             //         }, this);
-             //     });
-             // }
+             if (players && players.length > 0) {
+                 $(players).each(function(index, el) {
+                     el.played = false;
+                 });
+             }
              var videos = document.getElementsByClassName("js-player");
 
              function checkScroll() {
                  for (var i = 0; i < players.length; i++) {
-                     var video = videos[i];
-                     var x = video.offsetLeft,
-                         y = video.offsetTop,
-                         w = video.offsetWidth,
-                         h = video.offsetHeight,
-                         r = x + w, //right
-                         b = y + h, //bottom
-                         visibleX, visibleY, visible;
-                     visibleX = Math.max(0, Math.min(w, window.pageXOffset + window.innerWidth - x, r - window.pageXOffset));
-                     visibleY = Math.max(0, Math.min(h, window.pageYOffset + window.innerHeight - y, b - window.pageYOffset));
-                     visible = visibleX * visibleY / (w * h);
-                     if (visible < 1 / 4) {
-                         players[i].play();
-                     } else {
-                         players[i].pause();
+                     if (!players[i].played) {
+                         var video = videos[i];
+                         var x = video.offsetLeft,
+                             y = video.offsetTop,
+                             w = video.offsetWidth,
+                             h = video.offsetHeight,
+                             r = x + w, //right
+                             b = y + h, //bottom
+                             visibleX, visibleY, visible;
+                         visibleX = Math.max(0, Math.min(w, window.pageXOffset + window.innerWidth - x, r - window.pageXOffset));
+                         visibleY = Math.max(0, Math.min(h, window.pageYOffset + window.innerHeight - y, b - window.pageYOffset));
+                         visible = visibleX * visibleY / (w * h);
+                         if (visible < 1 / 4) {
+                             players[i].play();
+                             players[i].played = true;
+                         } else {
+                             return;
+                         }
                      }
                  }
              }
@@ -132,7 +149,7 @@
                  itemSelector: '.project-item',
                  columnWidth: '.grid-sizer',
                  gutter: '.gutter-sizer',
-                 percentPosition: true,
+                 //percentPosition: true,
                  transitionDuration: 0,
              });
          },
@@ -140,7 +157,8 @@
              mainSlider = $('#featured-projects').flickity({
                  cellSelector: '.featured-item',
                  imagesLoaded: false,
-                 bgLazyLoad: 1,
+                 bgLazyLoad: 2,
+                 //autoPlay: 500,
                  //setGallerySize: false,
                  accessibility: false,
                  wrapAround: true,
@@ -150,7 +168,7 @@
              });
              $('.slider-section').flickity({
                  cellSelector: '.gallery-cell',
-                 imagesLoaded: false,
+                 imagesLoaded: true,
                  lazyLoad: 1,
                  //setGallerySize: false,
                  accessibility: false,
@@ -213,14 +231,27 @@
                  type: 'index'
              }, $sitetitle, window.location.origin + $root);
          },
-         loadContent: function(url, target) {
-             $.ajax({
-                 url: url,
-                 success: function(data) {
-                     $(target).html(data);
-                 }
-             });
-         }
+         loadContent: function(url, target, container) {
+             setTimeout(function() {
+                 $(window).scrollTop(0);
+                 $(target).load(url + ' ' + container, function(response) {
+                     if (content.type == 'page') {
+                         setTimeout(function() {
+                             $body.addClass('page loaded').removeClass('home loading');
+                             app.plyr(true);
+                             app.loadSlider();
+                         }, 100);
+                     } else {
+                         setTimeout(function() {
+                             $body.addClass('home loaded').removeClass('page loading');
+                             app.plyr(true);
+                             app.loadProjects();
+                             app.loadSlider();
+                         }, 100);
+                     }
+                 });
+             }, 300);
+         },
      };
      app.init();
  });

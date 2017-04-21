@@ -1,4 +1,4 @@
-<section id="projects">
+<section id="projects" class="contained">
 
 <div class="gutter-sizer"></div>
 <div class="grid-sizer"></div>

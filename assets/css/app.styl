@@ -60,6 +60,10 @@ p:last-child
 	//hideselect()
 	box-sizing(border-box)
 
+video
+	display block
+	width 100%
+
 img
 	display block
 	max-width 100%
@@ -223,19 +227,15 @@ header.grey, body.page header
 		svg
 			fill $grey
 
-#wrapper
+#wrapper, #container
 	span(1)
 
-#container, .contained
-	span(1)
-	width 85%
-	max-width 200rem
-	display table
-	margin auto
-	float none
+#container
+	transition(opacity 300ms ease)
 
 section
-	span(1)
+	width 100%
+	display table
 	margin-bottom $spaceBetween
 	+below($md)
 		margin-bottom $padding
@@ -249,7 +249,6 @@ div.cta-button
 	z-index 10
 
 #featured-projects
-	span(1)
 	.featured-item
 		span(1)
 		position relative
@@ -271,7 +270,6 @@ div.cta-button
 			transform(translateY(100%) translateZ(0))
 
 #intro
-	span(1)
 	// flexbox()
 	// justify-content center
 	// align-items center
@@ -297,20 +295,18 @@ div.cta-button
 			padding 0
 
 #projects
-	span(1)
 	margin-bottom $spaceBetween
 	hideselect()
 	.gutter-sizer
 		width 2%
 	.grid-sizer
-		width 49%
+		width 48%
 	.project-item
-		width 49%
+		width 48%
 		position relative
 		cursor pointer
 		img
 			transition(opacity 200ms ease)
-			opacity 1
 		a
 			display block
 		.item-description
@@ -337,7 +333,7 @@ div.cta-button
 		.overlay
 			opacity 1
 	.project-item.highlight
-		height 25vw
+		height 22.1vw
 		.overlay
 			background $accent
 			opacity 1
@@ -373,6 +369,9 @@ div.cta-button
 		.gallery-cell
 			width 100%
 
+#page-content.home
+	margin-top 0
+
 footer
 	transition(all .7s $kinetic)
 	span(1)
@@ -391,6 +390,16 @@ footer
 		img
 			display inline-block
 			margin-right 10px
+
+.contained
+	width 80%
+	margin-right auto
+	margin-left auto
+
+body.loading
+	cursor wait
+	#container
+		opacity 0
 
 .svg
 	.logo.fallback
