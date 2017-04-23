@@ -15,13 +15,19 @@
                  $header = $('header');
                  $container = $('#container');
                  app.sizeSet();
+                 if ('scrollRestoration' in history) {
+                     history.scrollRestoration = 'manual';
+                 }
+                 if (Modernizr.localstorage) {
+                     localStorage.setItem('scrollTop-' + $('#container #page-content').data('id'), 0);
+                 }
                  History.Adapter.bind(window, 'statechange', function() {
                      var State = History.getState();
                      console.log(State);
                      content = State.data;
                      $body.addClass('loading');
                      if (content.type == 'page') {
-                        $body.addClass('page');
+                         $body.addClass('page');
                          app.loadContent(State.url, $container, '#page-content');
                      } else {
                          app.loadContent(State.url, $container, '#page-content');
@@ -31,6 +37,9 @@
                      event.preventDefault();
                      var $el = $(this);
                      var target = $el.data('target');
+                     if (Modernizr.localstorage) {
+                         localStorage.setItem('scrollTop-' + $('#container #page-content').data('id'), $(window).scrollTop());
+                     }
                      if (target == 'page') {
                          History.pushState({
                              type: 'page'
@@ -83,7 +92,13 @@
                      if (scrollTop > height / 5) {
                          $('#featured-projects').addClass('no-invite');
                      }
-                     if (scrollTop > height * 0.7 - headerHeight) {
+                     //if (scrollTop > height * 0.7 - headerHeight) {
+                     if (scrollTop >= headerHeight) {
+                         $header.addClass('hide');
+                     } else {
+                         $header.removeClass('hide');
+                     }
+                     if (scrollTop >= 30 + headerHeight) {
                          $header.addClass('reduced');
                      } else {
                          $header.removeClass('reduced');
@@ -106,7 +121,7 @@
          sizeSet: function() {
              width = $(window).width();
              height = $(window).height();
-             headerHeight = $header.height();
+             headerHeight = $('#site-title').height();
              if (width <= 770 || Modernizr.touch) isMobile = true;
              if (isMobile) {
                  if (width >= 770) {
@@ -120,28 +135,19 @@
                  loop: loop,
                  iconUrl: "/dothings/assets/images/plyr.svg"
              });
+             $players = $('.js-player');
              if (players && players.length > 0) {
                  $(players).each(function(index, el) {
                      el.played = false;
                  });
+                 window.addEventListener('scroll', checkScroll, false);
+                 window.addEventListener('resize', checkScroll, false);
              }
-             var videos = document.getElementsByClassName("js-player");
 
              function checkScroll() {
                  for (var i = 0; i < players.length; i++) {
                      if (!players[i].played) {
-                         var video = videos[i];
-                         var x = video.offsetLeft,
-                             y = video.offsetTop,
-                             w = video.offsetWidth,
-                             h = video.offsetHeight,
-                             r = x + w, //right
-                             b = y + h, //bottom
-                             visibleX, visibleY, visible;
-                         visibleX = Math.max(0, Math.min(w, window.pageXOffset + window.innerWidth - x, r - window.pageXOffset));
-                         visibleY = Math.max(0, Math.min(h, window.pageYOffset + window.innerHeight - y, b - window.pageYOffset));
-                         visible = visibleX * visibleY / (w * h);
-                         if (visible < 1 / 4) {
+                         if ($players.eq(i).isOnScreen()) {
                              players[i].play();
                              players[i].played = true;
                          } else {
@@ -150,8 +156,6 @@
                      }
                  }
              }
-             window.addEventListener('scroll', checkScroll, false);
-             window.addEventListener('resize', checkScroll, false);
          },
          loadProjects: function() {
              $('#projects').packery({
@@ -258,18 +262,37 @@
                      app.loadSlider();
                      if (content.type == 'page') {
                          setTimeout(function() {
-                              app.loadProjects();
+                             app.loadProjects();
                              $body.addClass('page loaded').removeClass('home loading');
                          }, 200);
                      } else {
                          setTimeout(function() {
-                              app.loadProjects();
+                             app.loadProjects();
+                             if (Modernizr.localstorage) {
+                                 var id = $('#container #page-content').data('id');
+                                 var scrollTop = localStorage.getItem('scrollTop-' + id) || 0;
+                                 console.log('GET: ' + 's-' + id + "= " + scrollTop);
+                                 $(window).scrollTop(scrollTop);
+                             }
                              $body.addClass('home loaded').removeClass('page loading');
                          }, 200);
                      }
                  });
-             }, 300);
+             }, 400);
          },
      };
      app.init();
  });
+ $.fn.isOnScreen = function() {
+     var win = $(window);
+     var viewport = {
+         top: win.scrollTop(),
+         left: win.scrollLeft()
+     };
+     viewport.right = viewport.left + win.width();
+     viewport.bottom = viewport.top + win.height();
+     var bounds = this.offset();
+     bounds.right = bounds.left + this.outerWidth();
+     bounds.bottom = bounds.top + this.outerHeight();
+     return (!(viewport.right < bounds.left || viewport.left > bounds.right || viewport.bottom < bounds.top || viewport.top > bounds.bottom));
+ };

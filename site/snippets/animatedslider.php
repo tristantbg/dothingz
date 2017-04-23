@@ -1,4 +1,4 @@
-<section id="featured-projects" class="animated">
+<section id="featured-projects" class="animated contained">
 
 <?php foreach ($page->featuredImages()->toStructure() as $key => $image): ?>
 

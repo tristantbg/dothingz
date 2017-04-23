@@ -2,7 +2,7 @@
 
 <div id="container">
 
-<div id="page-content" class="project-page">
+<div id="page-content" class="project-page" data-id="<?= $page->hash() ?>">
 
 <div class="contained">
 	

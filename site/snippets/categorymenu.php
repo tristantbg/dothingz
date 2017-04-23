@@ -3,11 +3,17 @@
 ?>
 
 <div id="category-menu">
-  <div class="burger-container" event-target="category">
+  <!-- <div class="burger-container" event-target="category">
     <div id="burger">
       <div class="bar topBar"></div>
       <div class="bar btmBar"></div>
     </div>
+  </div> -->
+  <div id="menu-icon" event-target="category">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
   </div>
   <ul class="menu center">
     <?php foreach($items as $item): ?>

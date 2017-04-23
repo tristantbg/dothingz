@@ -81,15 +81,23 @@ fields:
       videosection:
         label: Video
         entry: >
-          <p>Video ID : {{videourl}}</p>
-          <p>Video File : {{videofile}}</p>
+          <p>External Link: {{videoexternal}}</p>
+          <p>Fallback Image: {{videoposter}}</p>
+          <p>Video File: {{videofile}}</p>
+          <p>Video URL ID: {{videourl}}</p>
         fields:
+          videoexternal:
+            label: External Video URL
+            type: url
+          videoposter:
+            label: Fallback image for Mobile
+            type: image
+          videofile:
+            label: Video file
+            type: quickselect
+            options: videos
           videourl:
             label: Video ID
             type: text
             icon: code
             help: Youtube or Vimeo
-          videofile:
-            label: Video file
-            type: quickselect
-            options: videos

@@ -2,9 +2,7 @@
 
 <div id="container">
 
-<div id="page-content" class="home">
-	
-	<?php snippet('categorymenu') ?>
+<div id="page-content" class="home" data-id="<?= $page->hash() ?>">
 	
 	<?php snippet('animatedslider') ?>
 	

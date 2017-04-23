@@ -18,7 +18,7 @@ $grey ?= #d1d2d3
 // Metrics
 $padding = 3rem
 $paddingSmall = 2rem
-$spaceBetween = ($padding*2)
+$spaceBetween = $padding
 $paddingResp = 7vh
 $kinetic = cubic-bezier(0.77, 0, 0.175, 1)
 $cubic = cubic-bezier(0.4, 0.01, 0.165, 0.99)
@@ -204,134 +204,155 @@ hr
 
 .flickity-prev-next-button, .flickity-prev-next-button:hover
 	background transparent
+	+below($md)
+		width 30px
 
 .flickity-prev-next-button.previous
 	left $padding
+	+below($md)
+		left 1rem
 
 .flickity-prev-next-button.next
 	right $padding
+	+below($md)
+		right 1rem
 
 .flickity-prev-next-button .arrow
-	fill $primary
+	fill $grey
 
 header
+	width 100%
 	hideselect()
-	width 25rem
 	padding $padding 0 0 ($padding/2)
 	top 0
 	position fixed
 	z-index 100
-	+below($md)
-		width 20rem
-	#site-title
+	#site-title, #site-title-mobile
 		svg
 			width 100%
-			fill $primary
+			fill $grey
 		.secondary
 			display none
-		.small
-			display none
-			#logo_s_every
-				overflow hidden
-				transition(width 300ms $kinetic)
-				width 0
-
-body.home header:not(.reduced)
-	align(horizontal)
-	position fixed
-	vendor(filter,$shadow)
-
-body.page header:not(.reduced)
-	vendor(filter, none)
-
-body.home header.reduced
-	animation(godown 200ms $kinetic forwards)
-
-body.page header, header.reduced
-	width 100%
-	background $primary
-	padding ($padding/2) 10%
-	height ($padding*2)
-	+below($md)
-		padding ($padding/2) 5%
 	#site-title
+		width 25rem
+		align(horizontal)
+		+below($md)
+			width 20rem
+	#site-title-mobile
+		display none
 		height 100%
+		z-index 200
 		svg, div
 			fill $grey
 			width auto
 			height 100%
 			display block
 			float left
-		.full
-			display none
+		#logo_s_every
+			overflow hidden
+			transition(width 300ms $kinetic)
+			width 0
+		#menu-icon
+			width: 20px;
+			height: 17px;
+			margin-top 3px
+			position: absolute;
+			right 0
+			top: 0;
+			transform(rotate(0deg))
+			transition(all, .5s)
+			cursor: pointer;
+			span
+				display: block;
+				position: absolute;
+				height: 1px;
+				width: 100%;
+				background: $grey;
+				opacity: 1;
+				left: 0;
+				transform(rotate(0deg))
+				transition(all .25s ease)
+			span:nth-child(1)
+				top: 0px;
+			span:nth-child(2), span:nth-child(3)
+				top: 7px
+			span:nth-child(4)
+				top: 15px;
+
+body.home header:not(.reduced)
+	position fixed
+	//vendor(filter,$shadow)
+
+body.page header:not(.reduced)
+	//vendor(filter, none)
+
+body.home header.reduced
+	animation(godown 200ms $kinetic forwards)
+
+body.page header, header.reduced
+	width 100%
+	padding ($padding/2) 10%
+	background $primary
+	+below($md)
+		padding ($padding/2) 3%
+	#site-title
+		display none
+	#site-title-mobile
+		display block
+		height $padding
 		.small
 			height 100%
 			display block
 
-body.page header:hover, header.reduced:hover
-	//background $grey
-	#site-title
-		.small
-			// svg
-			// 	fill $primary
-			#logo_s_every
+#site-title-mobile .logo:hover
+		// svg
+		// 	fill $primary
+		#logo_s_every
+			+above($md + 1)
 				width 13.7rem
 
-header.grey, body.page header
-	#site-title
-		svg
-			fill $grey
 #category-menu
-	position absolute
-	top ($padding + 0.5)
+	position fixed
+	top ($padding - 1)
 	right 10%
 	z-index 300
-	vendor(filter,$shadow)
-	.burger-container
-		cursor pointer
-		z-index 300
-		position: absolute
-		top 0
-		right 0
-		height: 40px
-		width: 40px
-		cursor: pointer
-		transform(rotate(0deg))
-		transition: all 0.3s $cubic
-		user-select: none
-		-webkit-tap-highlight-color: transparent
-		#burger
-			width: 40px
-			height: 13px
-			position: relative
-			display: block
-			margin: -4px auto 0
-			top: 50%
-			.bar
-				width: 100%
-				height: 4px
-				display: block
-				position: relative
-				background: $primary
-				transition: all 0.3s $cubic
-				transition-delay: 0s
-			.topBar
-				transform(translateY(0px) rotate(0deg))
-			.btmBar
-				transform(translateY(5px) rotate(0deg))
+	//vendor(filter,$shadow)
+	+below($md)
+		right 3%
 	ul.menu
 		transition: all 0.3s $cubic
 		opacity 0
 		visibility hidden
-		position: relative
-		display: block
-		padding: 22px 60px 0
+		position: fixed;
+		display: block;
+		top: 0;
+		right: 0;
+		padding-top: 22px;
+		width: 10%;
 		list-style: none
-		color $primary
+		color $grey
+		background $primary
+		+below($md)
+			width 100%
+			height 100%
 		li.menu-item
 			margin-bottom .5em
 #category-menu.open
 	height: 100%
+	#menu-icon
+		z-index 300
+		span:nth-child(1)
+			top: 7px;
+			width: 0%;
+			left: 50%;
+		span:nth-child(2)
+			transform(rotate(45deg))
+		span:nth-child(3)
+			transform(rotate(-45deg))
+		span:nth-child(4)
+			top: 18px;
+			width: 0%;
+			left: 50%;
 	.burger-container
 		transform(rotate(90deg))
 		#burger
@@ -374,7 +395,7 @@ div.cta-button
 		position relative
 		background $primary center no-repeat
 		background-size cover
-		height 90vh
+		height calc(100vh - 20rem)
 		.cta-button
 			display none
 	.clone.cta-button
@@ -396,6 +417,7 @@ div.cta-button
 	width 100%
 	text-align center
 	padding-top 4vh
+	//animation(blink 1s infinite alternate)
 
 #featured-projects.no-invite::after
 	opacity 0
@@ -406,11 +428,12 @@ div.cta-button
 	.featured-item
 		transition(none)
 		left 0 !important
-		opacity 0
-		z-index -1
-	.featured-item.is-selected
-		opacity 1
+		visibility hidden
 		z-index 0
+	.featured-item.is-selected
+		visibility visible
+		opacity 1
+		z-index 1
 
 #intro
 	// flexbox()
@@ -445,11 +468,11 @@ div.cta-button
 		+below($md)
 			width 5%
 	.grid-sizer
-		width 48%
+		width 49%
 		+below($md)
 			width 100%
 	.project-item
-		width 48%
+		width 49%
 		position relative
 		cursor pointer
 		+below($md)
@@ -473,7 +496,7 @@ div.cta-button
 			.inner
 				align(vertical)
 				position relative
-				width 50%
+				width 60%
 				margin-left auto
 				margin-right auto
 				+below($md)
@@ -493,7 +516,7 @@ div.cta-button
 
 #page-content
 	span(1)
-	margin-top 15rem
+	margin-top 12rem
 	#project-infos
 		span(6/14, offset: 4/14)
 		margin-bottom 2.5em
@@ -525,7 +548,7 @@ div.cta-button
 			width 100%
 
 #page-content.home
-	margin-top 0
+	//margin-top 0
 
 footer
 	transition(all .7s $kinetic)
