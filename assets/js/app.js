@@ -47,6 +47,7 @@
                      } else {
                          app.goIndex();
                      }
+                     $('#category-menu').removeClass('open');
                  });
                  $body.on('click', '[event-target="readmore"]', function(event) {
                      event.preventDefault();
@@ -133,6 +134,7 @@
          plyr: function(loop) {
              players = plyr.setup('.js-player', {
                  loop: loop,
+                 controls: ['play-large', 'play'],
                  iconUrl: "/dothings/assets/images/plyr.svg"
              });
              $players = $('.js-player');
@@ -140,6 +142,7 @@
                  $(players).each(function(index, el) {
                      el.played = false;
                  });
+                 checkScroll();
                  window.addEventListener('scroll', checkScroll, false);
                  window.addEventListener('resize', checkScroll, false);
              }
@@ -278,7 +281,7 @@
                          }, 200);
                      }
                  });
-             }, 400);
+             }, 550);
          },
      };
      app.init();

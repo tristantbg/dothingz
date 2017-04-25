@@ -36,14 +36,17 @@ html
 	font-size 62.5%
 
 body
-	font-family 'ChronicleDisplay-Light', Helvetica Neue, Arial, sans-serif
+	font-family "Chronicle Display A", "Chronicle Display B", Helvetica Neue, Arial, sans-serif
 	text-rendering optimizeLegibility
 	font-smoothing()
 	font-size 1.4rem
+	font-style normal
+	font-weight 300
 
 @import 'loader.styl'
 
 p
+	font-style normal
 	margin-bottom 1em
 	line-height 140%
 
@@ -84,7 +87,7 @@ a, a:hover, a:visited, a:focus
 	cursor pointer
 
 em, .readmore
-	font-family 'ChronicleDisplay-LightItalic'
+	font-style italic
 
 h2
 	margin .4em 0
@@ -110,7 +113,9 @@ h4
 	margin-bottom 1em
 
 h4, h5, .explore, .small, .project-categories, #featured-projects::after
-	font-family 'GothamBook'
+	font-family "Gotham A", "Gotham B"
+	font-style normal
+	font-weight 400
 	font-size 1rem
 	letter-spacing .05em
 	text-transform uppercase
@@ -372,7 +377,7 @@ body.page header, header.reduced
 	background $primary
 
 #container
-	transition(opacity 300ms ease)
+	transition(opacity 400ms ease)
 
 section
 	width 100%
@@ -543,6 +548,8 @@ div.cta-button
 			visibility hidden
 		.project-readmore
 			display none
+	.content
+		background alpha($grey, 0.3)
 	.slider-section
 		.gallery-cell
 			width 100%

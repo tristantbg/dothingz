@@ -1,11 +1,13 @@
-<section class="video-section">
+<section class="video-section content">
 
 	<?php 
+	$poster = false;
+	if($data->videoposter()->isNotEmpty()) $poster = resizeOnDemand($data->videoposter()->toFile(),2500);
 	if ($data->videoexternal()->isNotEmpty()) {
-		echo '<video class="js-player" poster="'.e($data->videoposter()->isNotEmpty(), $data->videoposter()).'" controls loop><source src="' . $data->videoexternal()  . '" type="video/mp4"></video>';
+		echo '<video class="js-player" poster="'.$poster.'" controls loop><source src="' . $data->videoexternal()  . '" type="video/mp4"></video>';
 	}
 	else if ($data->videofile()->isNotEmpty()) {
-		echo '<video class="js-player" poster="'.e($data->videoposter()->isNotEmpty(), $data->videoposter()).'" controls loop><source src="' . $data->videofile()->toFile()->url()  . '" type="video/mp4"></video>';
+		echo '<video class="js-player" poster="'.$poster.'" controls loop><source src="' . $data->videofile()->toFile()->url()  . '" type="video/mp4"></video>';
 	} else {
 		$url = $data->videourl();
 		$headers = get_headers('https://www.youtube.com/oembed?format=json&url=http://www.youtube.com/watch?v=' . $url);

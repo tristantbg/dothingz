@@ -59,7 +59,7 @@
 	
 	<link rel="shortcut icon" href="<?= url('assets/images/favicon.ico') ?>">
 	<link rel="icon" href="<?= url('assets/images/favicon.ico') ?>" type="image/x-icon">
-	<link rel=“stylesheet” type="text/css" href="https://cloud.typography.com/7730974/7530172/css/fonts.css" />
+	<link rel="stylesheet" type="text/css" href="https://cloud.typography.com/7730974/7530172/css/fonts.css" />
 	<?php 
 	echo css('assets/css/build/build.min.css');
 	echo js('assets/js/vendor/modernizr.min.js');

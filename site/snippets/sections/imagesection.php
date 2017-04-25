@@ -1,4 +1,4 @@
-<section class="image-section">
+<section class="image-section content">
 
 	<?php 
 	$image = $data->picture()->toFile();

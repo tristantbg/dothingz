@@ -27,7 +27,7 @@
 	}
 	?>
 	
-	<div class="span-1-2">
+	<div class="span-1-2 content">
 		<img 
 		data-src="<?= $src ?>" 
 		data-srcset="<?= $srcset ?>" 
@@ -41,7 +41,7 @@
 		</noscript>
 	</div>
 
-	<div class="span-1-2">
+	<div class="span-1-2 content">
 		<img 
 		data-src="<?= $src2 ?>" 
 		data-srcset="<?= $srcset2 ?>" 

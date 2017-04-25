@@ -68,6 +68,6 @@
 
 </div>
 
-</div>
-
 <?php snippet('footer') ?>
+
+</div>

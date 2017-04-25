@@ -4,9 +4,8 @@
 	?>
 
 	<img 
-	src="<?= resizeOnDemand($image, 100) ?>" 
 	data-flickity-lazyload="<?= resizeOnDemand($image, 1500) ?>"  
-	class="lazyimg lazyload" 
+	class="lazyimg" 
 	alt="<?= $page->title()->html().' — © '.$site->title()->html(); ?>" 
 	width="100%" height="auto">
 	<noscript>
