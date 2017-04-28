@@ -4,53 +4,48 @@
 <div class="grid-sizer"></div>
 
 <?php
-$index = 1; 
 $ratio = 2/3;
-$hps = $projectsPage->highlightedprojects()->toStructure();
-$hpArr = [];
-foreach ($hps as $key => $hp) {
-	array_push($hpArr, $hp->hpposition());
-}
+$projects = $projectsPage->globalorder()->toStructure();
 ?>
 
-<?php foreach ($projects as $key => $project): ?>
+	<?php foreach ($projects as $key => $entry): ?>
+	<?php $project = page($projectsPage.'/'.$entry->project()->value());
+		  $image = $project->featured();
+		  if ($entry->featuredimage()->isNotEmpty()) {
+		  	$image = $projectsPage->image($entry->featuredimage());
+		  }
+	?>
 
-	<?php $highlight = array_search( strval($index), $hpArr ); ?>
-
-	<?php if(strval($highlight) != ''): ?>
-
-	<?php $hproject = page($projectsPage.'/'.$hps->nth($highlight)->hp()) ?>
+	<?php if($entry->highlight()->bool()): ?>
 
 	<div class="project-item highlight">
-		<a href="<?= $hproject->url() ?>" data-title="<?= $hproject->title()->html() ?>" data-target="page">
+		<a href="<?= $project->url() ?>" data-title="<?= $project->title()->html() ?>" data-target="page">
 			<div class="overlay">
 				<div class="inner">
-					<h2><?= $hproject->title()->html() ?></h2>
-					<?php if($hproject->categories()->isNotEmpty()): ?>
+					<h2><?= $project->title()->html() ?></h2>
+					<?php if($project->categories()->isNotEmpty()): ?>
 
 					<div class="project-categories">
-						<?php foreach ($hproject->categories()->split(',') as $key => $cat): ?>
+						<?php foreach ($project->categories()->split(',') as $key => $cat): ?>
 							<span><?= ucfirst ($cat) ?></span>
 						<?php endforeach ?>
 					</div>
 
 					<?php endif ?>
 					<p class="item-description">
-						<?= $hproject->text()->html() ?>
+						<?= $project->text()->html() ?>
 					</p>
 				</div>
 			</div>
 		</a>
 	</div>
 
-	<?php endif ?>
-
-	<?php if($project->featured()->isNotEmpty()): ?>
+	<?php elseif($image): ?>
 
 	<div class="project-item">
 		<a href="<?= $project->url() ?>" data-title="<?= $project->title()->html() ?>" data-target="page">
 			<?php 
-			$image = $project->featured()->toFile();
+			$image = $image->toFile();
 			$srcset = '';
 			if ($image->isLandscape()) {
 				$src = thumb($image, array('width' => 100, 'height' => 100*$ratio, 'crop' => true))->url();
@@ -92,7 +87,6 @@ foreach ($hps as $key => $hp) {
 
 	<?php endif ?>
 
-	<?php $index++ ?>
 
 <?php endforeach ?>
 	

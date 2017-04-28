@@ -18,54 +18,27 @@ fields:
   featuredImages:
     label: Featured Images
     type: gallery
-  highlightSettings:
-    label: Highlighted Project
+  globalSettings:
+    label: Global order
     type: tabs
-  highlightedProjects:
-    label: Highlighted Projects
+  globalorder:
+    label: Global order
     type: structure
     style: table
     fields:
-      hp:
+      project:
         label: Project
         type: quickselect
-        options: visibleChildren
+        options: children
+        placeholder: Choose a project...
         required: true
-        width: 1/2
-      hpposition:
-        label: Position
-        type: number
-        min: 1
-        width: 1/2
-  recentSettings:
-    label: Recent Project
-    type: tabs
-  recenttoggle:
-    label: Recent project ?
-    type: fieldtoggle
-    width: 1/2
-    options:
-      yes: "Yes"
-      no: "No"
-    show:
-      yes: recentproject recentimage recentcolor
-    hide:
-      no: recentproject recentimage recentcolor
-  recentproject:
-    label: Recent project
-    type: quickselect
-    options: visibleChildren
-    value: '{{uri}}'
-    width: 1/2
-  recentimage:
-    label: Custom Image
-    type: image
-    help: Leave empty to keep original featured image
-    width: 1/2
-  recentcolor:
-    label: Text color
-    type: radio
-    width: 1/2
-    options:
-      black: Black
-      white: White
+      featuredimage:
+        label: Custom Featured image
+        type: quickselect
+        options: images
+        help: Optional
+      highlight:
+        label: Highlighted project
+        type: toggle
+        options: yes/no
+        default: no
