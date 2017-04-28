@@ -5,7 +5,7 @@
      mainSlider,
      footer = false,
      isMobile = false,
-     $root = '/dothings';
+     $root = '/';
  $(function() {
      var app = {
          init: function() {
@@ -134,8 +134,8 @@
          plyr: function(loop) {
              players = plyr.setup('.js-player', {
                  loop: loop,
-                 controls: ['play-large', 'play'],
-                 iconUrl: "/dothings/assets/images/plyr.svg"
+                 controls: ['play-large'],
+                 iconUrl: "/assets/images/plyr.svg"
              });
              $players = $('.js-player');
              if (players && players.length > 0) {
@@ -161,12 +161,15 @@
              }
          },
          loadProjects: function() {
-             $('#projects').packery({
+             $projectsGrid = $('#projects').packery({
                  itemSelector: '.project-item',
                  columnWidth: '.grid-sizer',
                  gutter: '.gutter-sizer',
                  //percentPosition: true,
                  transitionDuration: 0,
+             });
+             $projectsGrid.imagesLoaded().progress(function() {
+                 $projectsGrid.packery();
              });
          },
          loadSlider: function() {
@@ -261,15 +264,15 @@
              setTimeout(function() {
                  $(window).scrollTop(0);
                  $(target).load(url + ' ' + container, function(response) {
-                     app.plyr(true);
-                     app.loadSlider();
-                     if (content.type == 'page') {
-                         setTimeout(function() {
+                     setTimeout(function() {
+                         app.plyr(true);
+                         app.loadSlider();
+                         if (content.type == 'page') {
                              app.loadProjects();
-                             $body.addClass('page loaded').removeClass('home loading');
-                         }, 200);
-                     } else {
-                         setTimeout(function() {
+                             setTimeout(function() {
+                                 $body.addClass('page loaded').removeClass('home loading');
+                             }, 300);
+                         } else {
                              app.loadProjects();
                              if (Modernizr.localstorage) {
                                  var id = $('#container #page-content').data('id');
@@ -277,11 +280,13 @@
                                  console.log('GET: ' + 's-' + id + "= " + scrollTop);
                                  $(window).scrollTop(scrollTop);
                              }
-                             $body.addClass('home loaded').removeClass('page loading');
-                         }, 200);
-                     }
+                             setTimeout(function() {
+                                 $body.addClass('home loaded').removeClass('page loading');
+                             }, 300);
+                         }
+                     }, 100);
                  });
-             }, 550);
+             }, 300);
          },
      };
      app.init();

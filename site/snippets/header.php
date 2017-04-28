@@ -102,7 +102,8 @@
 			</div>
 		</a>
 		</div>
-		<div id="site-title-mobile">
+		<div id="site-title-mobile" class="contained">
+				<div class="inner">
 				<?php snippet('categorymenu') ?>
 				<div class="logo">
 				<a href="<?= $site->url() ?>" data-target="index">
@@ -113,6 +114,7 @@
 				<svg id="logo_s_dot" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30.9 200.6"><path class="st0" d="M30.9 139.4c0 8.4-7 15.4-15.6 15.4-8.4 0-15.4-7-15.4-15.4 0-8.6 7-15.6 15.6-15.6s15.4 6.8 15.4 15.6z"/></svg>
 				</div>
 				</a>
+				</div>
 		</div>
 </header>
 

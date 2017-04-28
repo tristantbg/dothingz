@@ -16,6 +16,7 @@
   "dependencies": {
     "flickity": "^2.0.5",
     "flickity-bg-lazyload": "^1.0.0",
+    "imagesloaded": "^4.1.1",
     "lazysizes": "^3.0.0",
     "packery": "^2.1.1",
     "plyr": "^2.0.12"

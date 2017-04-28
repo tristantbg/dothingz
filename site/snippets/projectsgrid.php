@@ -5,6 +5,7 @@
 
 <?php
 $index = 1; 
+$ratio = 2/3;
 $hps = $projectsPage->highlightedprojects()->toStructure();
 $hpArr = [];
 foreach ($hps as $key => $hp) {
@@ -51,12 +52,21 @@ foreach ($hps as $key => $hp) {
 			<?php 
 			$image = $project->featured()->toFile();
 			$srcset = '';
-			for ($i = 500; $i <= 2000; $i += 500) $srcset .= resizeOnDemand($image, $i) . ' ' . $i . 'w,';
+			if ($image->isLandscape()) {
+				$src = thumb($image, array('width' => 100, 'height' => 100*$ratio, 'crop' => true))->url();
+				$datasrc = thumb($image, array('width' => 1500, 'height' => 1500*$ratio, 'crop' => true))->url();
+				for ($i = 500; $i <= 1500; $i += 500) $srcset .= thumb($image, array('width' => $i, 'height' => $i*$ratio, 'crop' => true))->url() . ' ' . $i . 'w,';
+			} else {
+				$src = thumb($image, array('width' => 100, 'height' => 100/$ratio, 'crop' => true))->url();
+				$datasrc = thumb($image, array('width' => 1500, 'height' => 1500/$ratio, 'crop' => true))->url();
+				for ($i = 500; $i <= 1500; $i += 500) $srcset .= thumb($image, array('width' => $i, 'height' => $i/$ratio, 'crop' => true))->url() . ' ' . $i . 'w,';
+			}
+			
 			?>
 
 			<img 
-			src="<?= resizeOnDemand($image, 100) ?>" 
-			data-src="<?= resizeOnDemand($image, 1500) ?>" 
+			src="<?= $src ?>" 
+			data-src="<?= $datasrc ?>" 
 			data-srcset="<?= $srcset ?>" 
 			data-sizes="auto" 
 			data-optimumx="1.5" 
