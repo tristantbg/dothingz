@@ -10,13 +10,18 @@ $projects = $projectsPage->globalorder()->toStructure();
 
 	<?php foreach ($projects as $key => $entry): ?>
 	<?php $project = page($projectsPage.'/'.$entry->project()->value());
-		  $image = $project->featured();
-		  if ($entry->featuredimage()->isNotEmpty()) {
-		  	$image = $projectsPage->image($entry->featuredimage());
-		  }
+		  if($project) {
+			  $image = $project->featured()->toFile();
+			  if ($entry->featuredimage()->isNotEmpty()) {
+			  	$image = $projectsPage->image($entry->featuredimage()->value());
+			  }
+			} else {
+				$image = false;
+				echo '<h2 class="center">'.ucfirst($entry->project()->value()).' ID was not found.</h2>';
+			}
 	?>
 
-	<?php if($entry->highlight()->bool()): ?>
+	<?php if($project && $entry->highlight()->bool()): ?>
 
 	<div class="project-item highlight">
 		<a href="<?= $project->url() ?>" data-title="<?= $project->title()->html() ?>" data-target="page">
@@ -45,7 +50,6 @@ $projects = $projectsPage->globalorder()->toStructure();
 	<div class="project-item">
 		<a href="<?= $project->url() ?>" data-title="<?= $project->title()->html() ?>" data-target="page">
 			<?php 
-			$image = $image->toFile();
 			$srcset = '';
 			if ($image->isLandscape()) {
 				$src = thumb($image, array('width' => 100, 'height' => 100*$ratio, 'crop' => true))->url();

@@ -2,7 +2,7 @@
 
 <?php foreach ($page->featuredImages()->toStructure() as $key => $image): ?>
 
-		<div class="featured-item lazyimg" style="background-image: url(<?= resizeOnDemand($image->toFile(), 2500) ?>)"></div>
+		<img class="featured-item lazyimg" src="<?= resizeOnDemand($image->toFile(), 2500) ?>" width="100%" height="auto">
 
 <?php endforeach ?>
 	

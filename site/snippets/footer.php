@@ -6,11 +6,8 @@
 			<h2><?= $site->footertitle()->html() ?></h2>
 		</div>
 		<div class="cf">
-			<div class="col-1-3">
+			<div class="col-2-3 columns-2">
 				<?= $site->footertext1()->kt() ?>
-			</div>
-			<div class="col-1-3">
-				<?= $site->footertext2()->kt() ?>
 			</div>
 			<div class="col-1-3">
 				<div class="col-1-2">

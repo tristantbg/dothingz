@@ -7,12 +7,12 @@
 	?>
 
 	<img 
-	src="<?= resizeOnDemand($image, 100) ?>" 
+	src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" 
 	data-src="<?= resizeOnDemand($image, 1500) ?>" 
 	data-srcset="<?= $srcset ?>" 
 	data-sizes="auto" 
 	data-optimumx="1.5" 
-	class="lazyimg lazyload" 
+	class="lazyimg lazyload lazypreload" 
 	alt="<?= $page->title()->html().' — © '.$site->title()->html(); ?>" 
 	width="100%" height="auto">
 	<noscript>
