@@ -42,3 +42,8 @@ fields:
         type: toggle
         options: yes/no
         default: no
+      videofile:
+        label: Video instead
+        type: quickselect
+        options: files
+        help: Optional

@@ -21,7 +21,19 @@ $projects = $projectsPage->globalorder()->toStructure();
 			}
 	?>
 
-	<?php if($project && $entry->highlight()->bool()): ?>
+	<?php if($entry->videofile()->isNotEmpty()): ?>
+
+		<?php if($video = $entry->videofile()->toFile()): ?>
+
+		<div class="project-item video">
+			<video autoplay autobuffer loop>
+				<source src="<?= $video->url() ?>" type="video/mp4">
+			</video>
+		</div>
+
+		<?php endif ?>
+
+	<?php elseif($project && $entry->highlight()->bool()): ?>
 
 	<div class="project-item highlight">
 		<a href="<?= $project->url() ?>" data-title="<?= $project->title()->html() ?>" data-target="page">

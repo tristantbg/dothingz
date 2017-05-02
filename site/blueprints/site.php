@@ -55,10 +55,7 @@ fields:
     label: Footer Title
     type: text
   footertext1:
-    label: Text 1
-    type: textarea
-  footertext2:
-    label: Text 2
+    label: Text
     type: textarea
   footeraddress:
     label: Address
