@@ -59,31 +59,20 @@ $projects = $projectsPage->globalorder()->toStructure();
 
 	<?php elseif($image): ?>
 
-	<div class="project-item">
-		<a href="<?= $project->url() ?>" data-title="<?= $project->title()->html() ?>" data-target="page">
-			<?php 
-			$srcset = '';
-			if ($image->isLandscape()) {
-				$src = thumb($image, array('width' => 100, 'height' => 100*$ratio, 'crop' => true))->url();
-				$datasrc = thumb($image, array('width' => 1500, 'height' => 1500*$ratio, 'crop' => true))->url();
-				for ($i = 500; $i <= 1500; $i += 500) $srcset .= thumb($image, array('width' => $i, 'height' => $i*$ratio, 'crop' => true))->url() . ' ' . $i . 'w,';
-			} else {
-				$src = thumb($image, array('width' => 100, 'height' => 100/$ratio, 'crop' => true))->url();
-				$datasrc = thumb($image, array('width' => 1500, 'height' => 1500/$ratio, 'crop' => true))->url();
-				for ($i = 500; $i <= 1500; $i += 500) $srcset .= thumb($image, array('width' => $i, 'height' => $i/$ratio, 'crop' => true))->url() . ' ' . $i . 'w,';
-			}
-			
-			?>
+	<?php 
+	$srcset = '';
+	if ($image->isLandscape()) {
+		$datasrc = thumb($image, array('width' => 1000, 'height' => 1000*$ratio, 'crop' => true))->url();
+	} else {
+		$datasrc = thumb($image, array('width' => 1000, 'height' => 1000/$ratio, 'crop' => true))->url();
+	}
+	
+	?>
 
-			<img 
-			src="<?= $src ?>" 
-			data-src="<?= $datasrc ?>" 
-			data-srcset="<?= $srcset ?>" 
-			data-sizes="auto" 
-			data-optimumx="1.5" 
-			class="lazyimg lazyload lazypreload" 
-			alt="<?= $project->title()->html().' — © '.$site->title()->html(); ?>" 
-			width="100%" height="auto">
+	<div class="project-item<?php e($image->isLandscape(), ' landscape') ?> lazyimg lazyload lazypreload" data-bg="<?= $datasrc ?>">
+
+		<a href="<?= $project->url() ?>" data-title="<?= $project->title()->html() ?>" data-target="page">
+			
 			<div class="overlay">
 				<div class="inner">
 					<h2><?= $project->title()->html() ?></h2>
@@ -98,6 +87,7 @@ $projects = $projectsPage->globalorder()->toStructure();
 					<?php endif ?>
 				</div>
 			</div>
+
 		</a>
 	</div>
 
